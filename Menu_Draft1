@@ -142,7 +142,7 @@ namespace TCG_Draft1
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\n[X] Press any key to exit.");
             Console.ResetColor();
-            Console.ReadKey(false);
+            Console.ReadKey(true);
         }
     }
 }
