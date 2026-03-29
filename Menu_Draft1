@@ -1,0 +1,148 @@
+using System;
+using System.Threading;
+
+namespace TCG_Draft1
+{
+
+    /* Delete the comments below in final submission 
+          - FOR UNDERSTANDING
+          - EDIT LATER
+          - PLACEHOLDER CODE*/
+
+    // Base Classes
+    public abstract class GameScreen
+    {
+        public const string GameTitle = "Ultra Moon TCG";
+        public abstract void DisplayUI(); // <- FOR UNDERSTANDING: DisplayUI is void because it doesn't give any new information back to the program
+        public abstract GameScreen ProcessInput();
+        public static void InitilaizeScreen(string screenName)
+        {
+            Console.Clear();
+            Console.WriteLine($"=== {GameTitle} | {screenName} ===");
+            Console.WriteLine();
+        }
+
+        // Prompts user message
+        protected void PromptUser(bool isError)
+        {
+            if (isError)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("[!] Press any key to retry.");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("[<] Press any key to return to main menu.");
+            }
+            Console.ResetColor();
+            Console.ReadKey(true);
+        }
+
+    }
+
+    // Screens
+    public class MainMenu : GameScreen
+    {
+        public override void DisplayUI()
+        {
+            InitilaizeScreen("MENU");
+            Console.WriteLine("[1] Pull cards");
+            Console.WriteLine("[2] Battle");
+            Console.WriteLine("[3] Display binder");
+            Console.WriteLine("[4] Exit");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("\nChoose an option: ");
+            Console.ResetColor();
+        }
+        public enum MainMenuOption // <- FOR UNDERSTANDING: Could just use switch, but by adding an enum list, we make the switch cases more readable
+        {
+            PullCard = '1',
+            Battle = '2',
+            DisplayBinder = '3',
+            Exit = '4'
+        }
+
+        public override GameScreen ProcessInput()
+        {
+            char input = Console.ReadKey(false).KeyChar;
+            Thread.Sleep(100); // Lets choice appear for a quick moment
+
+            MainMenuOption choice = (MainMenuOption)input; // <- FOR UNDERSTANDING: Reads user input, references the enum list, and outputs the corresponding MainMenuOption
+
+            switch (choice)
+            {
+                case MainMenuOption.PullCard:
+                    // PLACEHOLDER CODE \/
+                    InitilaizeScreen("PULL CARDS");
+                    PromptUser(isError: false);
+                    return this; // <- EDIT LATER: return PullCardScreen();
+                case MainMenuOption.Battle:
+                    // PLACEHOLDER CODE \/
+                    InitilaizeScreen("BATTLE");
+                    PromptUser(isError: false);
+                    return this;
+                case MainMenuOption.DisplayBinder:
+                    // PLACEHOLDER CODE \/
+                    InitilaizeScreen("BINDER");
+                    PromptUser(isError: false);
+                    return this;
+                case MainMenuOption.Exit:
+                    Console.WriteLine("\n\nCLOSING GAME...");
+                    Thread.Sleep(1000); // Gives user time to read exit message
+                    return null; // Tells game to stop
+                default:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"\n\n[!] '{input}' is not a valid menu choice.");
+                    Console.ResetColor();
+                    PromptUser(isError: true);
+                    return this; // <- Stays in menu
+            }
+        }
+    }
+
+    // Extra/Optional (\/ EDIT LATER)(not used yet, but could be useful for game animation)
+    public static class TextAnimate
+    {
+        public static void Type(string textInput)
+        {
+            foreach (char c in textInput)
+            {
+                Console.Write(c);
+                Thread.Sleep(10);
+            }
+            Console.WriteLine();
+        }
+    }
+
+    // Main Game
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            GameScreen currentScreen = new MainMenu();
+
+            while (currentScreen != null)
+            {
+                Console.Clear();
+                currentScreen.DisplayUI(); // <- FOR UNDERSTANDING: Displays UI until program stops
+                currentScreen = currentScreen.ProcessInput(); // <- FOR UNDERSTANDING: Processes inputs only until user selects "Exit"
+            }
+
+            // Shutdown Screen
+            Console.Clear();
+            GameScreen.InitilaizeScreen("CREDITS");
+            Console.WriteLine("Thank you so much for playing!");
+            Console.WriteLine("\nGame made by:");
+            Console.WriteLine("De Guzman, Kellie");
+            Console.WriteLine("Layugan, Mishael");
+            Console.WriteLine("Tee, Xyril");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\n[X] Press any key to exit.");
+            Console.ResetColor();
+            Console.ReadKey(false);
+        }
+    }
+}
