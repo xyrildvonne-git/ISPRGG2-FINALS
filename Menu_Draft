@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 
-namespace TCG_Draft1
+namespace Menu_Draft
 {
 
     /* Delete the comments below in final submission 
@@ -10,6 +10,7 @@ namespace TCG_Draft1
           - PLACEHOLDER CODE*/
 
     // Base Classes
+
     public abstract class GameScreen
     {
         public const string GameTitle = "Ultra Moon TCG";
@@ -53,7 +54,7 @@ namespace TCG_Draft1
             Console.WriteLine("[4] Exit");
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("\nChoose an option: ");
+            Console.Write("\n[^] Choose an option: ");
             Console.ResetColor();
         }
         public enum MainMenuOption // <- FOR UNDERSTANDING: Could just use switch, but by adding an enum list, we make the switch cases more readable
@@ -123,11 +124,11 @@ namespace TCG_Draft1
         {
             GameScreen currentScreen = new MainMenu();
 
-            while (currentScreen != null)
+            while (currentScreen != null) // <- FOR UNDERSTANDING: As long as there is an active game screen, the code will run
             {
                 Console.Clear();
                 currentScreen.DisplayUI(); // <- FOR UNDERSTANDING: Displays UI until program stops
-                currentScreen = currentScreen.ProcessInput(); // <- FOR UNDERSTANDING: Processes inputs only until user selects "Exit"
+                currentScreen = currentScreen.ProcessInput(); // <- FOR UNDERSTANDING: Processes inputs only until user selects "Exit" 
             }
 
             // Shutdown Screen
