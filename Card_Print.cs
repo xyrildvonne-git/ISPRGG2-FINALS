@@ -1,3 +1,10 @@
+using Microsoft.VisualBasic;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp4
+{
     public class CardPrint
     {
         public string Name;
@@ -50,7 +57,7 @@
                 ? Program.AttackNames[AttackCode]
                 : AttackCode;
 
-           // Still working on this, trying to make the cards look cleaner pa
+           //Still working on this, trying to make the cards look cleaner pa
             Console.WriteLine(borderTop);
             Console.WriteLine($"{sideChar} {Name.PadRight(10)} HP:{HP.ToString().PadLeft(3)} {sideChar}");
             Console.WriteLine($"{sideChar} TYPE: {Type.ToString().PadRight(11)}{sideChar}");
@@ -59,3 +66,4 @@
             Console.WriteLine(borderBottom);
         }
     }
+}
