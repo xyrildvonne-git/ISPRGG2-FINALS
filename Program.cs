@@ -1,31 +1,62 @@
+using ConsoleApp4;
+
 using System;
+using System.Collections.Generic;
 
-class Program
+namespace ConsoleApp4
 {
-    static void Main()
+    internal class Program
     {
-        List<Card> allCards = DataSource.LoadCards(@"C:\Users\admin\Documents\cards.txt"); //i placed the full path; can be changed
+        public static List<CardPrint> allCards;
 
-        Console.WriteLine("Cards loaded: " + allCards.Count);
+        public static Dictionary<string, string> AttackNames = new Dictionary<string, string>
+        {
+            {"JMS", "Jump Scare"},
+            {"SFB", "Soft Block"},
+            {"HPS", "Hard Pass"},
+            {"DLL", "Delulu"},
+            {"BRR", "Brain Rot"},
+            {"MXS", "Mixed Signal"},
+            {"RBD", "Rebound"},
+            {"ORB", "Orbiting"},
+            {"RLP", "Relapse"},
+            {"GHS", "Ghosting"},
+            {"HRL", "Hard Launch"},
+            {"NCH", "Nonchalant"},
+            {"LVB", "Love Bomb"},
+            {"AUF", "Aura Farm"},
+            {"TRD", "Trauma Dump"}
+        };
+
+        static void Main()
+        {
+            // Load cards
+            allCards = DataSource.LoadCards(@"C:\Users\admin\Documents\cards.txt"); // Direct path; to be changed later
+
+            // Start menu
+            GameScreen currentScreen = new MainMenu();
+
+            while (currentScreen != null)
+            {
+
+                currentScreen.DisplayUI();
+                currentScreen = currentScreen.ProcessInput();
+            }
+
+            // Shutdown screen
+            Console.Clear();
+            GameScreen.InitializeScreen("CREDITS");
+            Console.WriteLine("Thank you so much for playing!");
+
+            Console.WriteLine("\nGame made by:");
+            Console.WriteLine("De Guzman, Kellie");
+            Console.WriteLine("Layugan, Mishael");
+            Console.WriteLine("Tee, Xyril");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\n[X] Press any key to exit.");
+            Console.ResetColor();
+            Console.ReadKey(true);
+        }
     }
-
-    public static Dictionary<string, string> AttackNames = new Dictionary<string, string>
-{
-    {"JMS", "Jump Scare"},
-    {"SFB", "Soft Block"},
-    {"HPS", "Hard Pass"},
-    {"DLL", "Delulu"},
-    {"BRR", "Brain Rot"},
-    {"MXS", "Mixed Signal"},
-    {"RBD", "Rebound"},
-    {"ORB", "Orbiting"},
-    {"RLP", "Relapse"},
-    {"GHS", "Ghosting"},
-    {"HRL", "Hard Launch"},
-    {"NCH", "Nonchalant"},
-    {"LVB", "Love Bomb"},
-    {"AUF", "Aura Farm"},
-    {"TRD", "Trauma Dump"}
-};
-
 }
