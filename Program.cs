@@ -34,7 +34,7 @@ namespace ConsoleApp4
             allCards = DataSource.LoadCards(@"C:\Users\admin\Documents\cards.txt"); // Direct path; to be changed later
 
             // Start menu
-            GameScreen currentScreen = new MainMenu();
+            Screen currentScreen = new MainMenu();
 
             while (currentScreen != null)
             {
@@ -45,7 +45,7 @@ namespace ConsoleApp4
 
             // Shutdown screen
             Console.Clear();
-            GameScreen.InitializeScreen("CREDITS");
+            Screen.InitializeScreen("CREDITS");
             Console.WriteLine("Thank you so much for playing!");
 
             Console.WriteLine("\nGame made by:");
