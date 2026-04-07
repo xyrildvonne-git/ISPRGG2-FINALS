@@ -1,10 +1,15 @@
-namespace Card_DataSource
+using Microsoft.VisualBasic;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp4
 {
     public class DataSource
     {
-        public static List<Card> LoadCards(string path)
+        public static List<CardPrint> LoadCards(string path)
         {
-            List<Card> cardList = new List<Card>();
+            List<CardPrint> cardList = new List<CardPrint>();
 
             if (!File.Exists(path))
             {
@@ -18,7 +23,7 @@ namespace Card_DataSource
             {
                 string[] parts = line.Split(',');
 
-                Card card = new Card
+                CardPrint card = new CardPrint
                 {
                     Name = parts[0],
                     Type = Enum.Parse<CardType>(parts[1].ToUpper()),
