@@ -1,4 +1,4 @@
-namespace ConsoleApp4
+namespace Card_DataSource
 {
     public class DataSource
     {
