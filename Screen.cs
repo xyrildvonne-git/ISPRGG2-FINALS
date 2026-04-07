@@ -1,11 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
 namespace ConsoleApp4
 {
-        public abstract class GameScreen
+        public abstract class Screen
         {
             public const string GameTitle = "Ultra Moon TCG";
 
             public abstract void DisplayUI();
-            public abstract GameScreen ProcessInput();
+            public abstract Screen ProcessInput();
 
             public static void InitializeScreen(string screenName)
             {
