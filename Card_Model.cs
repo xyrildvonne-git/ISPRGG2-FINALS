@@ -1,20 +1,26 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Card_Model
+namespace ConsoleApp4
 {
-
-    public abstract class Card
+    internal class Card_Model
     {
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public int HP { get; set; }
-        public int AttackDamage { get; set; }
-        public int Rarity { get; set; }
-        public string SpecialMove { get; set; }
 
-        public abstract void DisplayCard();
-        public abstract void PullCard();
+        public abstract class Card
+        {
+            public string Name { get; set; }
+            public string Type { get; set; }
+            public int HP { get; set; }
+            public int AttackDamage { get; set; }
+            public int Rarity { get; set; }
+            public string SpecialMove { get; set; }
+
+            public abstract void DisplayCard();
+            public abstract void PullCard();
+
+        }
 
     }
-
 }
+
