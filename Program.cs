@@ -31,7 +31,7 @@ namespace ConsoleApp4
         static void Main()
         {
             // Load cards
-            allCards = DataSource.LoadCards(@"C:\Users\admin\Documents\cards.txt"); // Direct path; to be changed later
+            allCards = DataSource.LoadCards(@"..\..\..\card.txt");
 
             // Start menu
             Screen currentScreen = new MainMenu();
