@@ -54,9 +54,8 @@ namespace ConsoleApp4
                     return this;
 
                 case MainMenuOption.Battle:
-                    // PLACEHOLDER CODE \/
-                    InitializeScreen("BATTLE");
-                    PromptUser(isError: false);
+                    
+                    UserCardSelection.RunSelection(); //Card Selection and runs Binder Sys for selection
                     return this;
 
                 case MainMenuOption.DisplayBinder:
