@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace UltraMoonTCG
 {
     public enum CardType
@@ -7,29 +10,81 @@ namespace UltraMoonTCG
         GRASS
     }
 
-    public enum CardIndex
-    {
-
-    }
-
     public interface ICard
     {
         string Name { get; }
     }
 
-    public abstract class BaseCard : ICard  // Battle Cards
-    {
-        public string Name { get; init; } 
-        public CardType Type { get; init; }
-        public int Rarity { get; init; }
-        public int HP { get; init; }
-        public int AttackCode { get; init; }
-        public int Attack { get; init; }
-        public string SpecialMove { get; init; }
 
-        public abstract void PrintCard();
+    public abstract class BaseCard : ICard // Battle cards
+    {
+        public string Name { get; set; }
+        public CardType Type { get; set; }
+        public int Rarity { get; set; }
+        public int HP { get; set; }
+
+        public string AttackCode { get; set; }
+        public int Attack { get; set; }
+        public string SpecialMove { get; set; }
+
+        public int Index { get; set; }
+        public int PullCount { get; set; }
+
+
+        public virtual void PrintCard() // Deleted PrintCard class and moved to CardModel
+        {
+            string borderTop = "";
+            string borderBottom = "";
+            char sideChar = '|';
+
+            switch (Rarity)
+            {
+                case 1:
+                    borderTop = "+------------------+"; // Combined Top and Bottom into single line of code for easy changing later on
+                    borderBottom = "+------------------+";
+                    sideChar = '|';
+                    break;
+
+                case 2:
+                    borderTop = "+==================+";
+                    borderBottom = "+==================+";
+                    sideChar = '|';
+                    break;
+
+                case 3:
+                    borderTop = "********************";
+                    borderBottom = "********************";
+                    sideChar = '*';
+                    break;
+
+                case 4:
+                    borderTop = "@@@@@@@@@@@@@@@@@@@@";
+                    borderBottom = "@@@@@@@@@@@@@@@@@@@@";
+                    sideChar = '@';
+                    break;
+
+                case 5:
+                    borderTop = "####################";
+                    borderBottom = "####################";
+                    sideChar = '#';
+                    break;
+            }
+
+            string attackName = Program.AttackNames.ContainsKey(AttackCode)
+                ? Program.AttackNames[AttackCode]
+                : AttackCode;
+
+            // Card borders (fixed)
+            Console.WriteLine(borderTop);
+            Console.WriteLine($"{sideChar} {Name.PadRight(9)} HP:{HP.ToString().PadLeft(3)} {sideChar}");
+            Console.WriteLine($"{sideChar} TYPE: {Type.ToString().PadRight(11)}{sideChar}");
+            Console.WriteLine($"{sideChar} {attackName.PadRight(12)} {Attack.ToString().PadLeft(3)} {sideChar}");
+            Console.WriteLine($"{sideChar} {SpecialMove.PadRight(17)}{sideChar}");
+            Console.WriteLine(borderBottom);
+        }
+
         public abstract void PullCard();
-    };
+    }
 
     public static class GameData
     {
@@ -53,71 +108,9 @@ namespace UltraMoonTCG
         };
     }
 
-    public class CardPrint
-    {
-        public string Name;
-        public CardType Type;
-        public int HP;
-        public string AttackCode;
-        public int Attack;
-        public int Rarity;
-        public string SpecialMove;
-
-        public void PrintCard()
-        {
-            string borderTop = "";
-            string borderBottom = "";
-            char sideChar = '|';
-
-            switch (Rarity)
-            {
-                case 1:
-                    borderTop = borderBottom = "+------------------+"; // Combined Top and Bottom into single line of code for easy changing later on
-                    sideChar = '|';
-                    break;
-
-                case 2:
-                    borderTop = borderBottom = "+==================+";
-                    sideChar = '|';
-                    break;
-
-                case 3:
-                    borderTop = borderBottom = "********************";
-                    sideChar = '*';
-                    break;
-
-                case 4:
-                    borderTop = borderBottom = "@@@@@@@@@@@@@@@@@@@@";
-                    sideChar = '@';
-                    break;
-
-                case 5:
-                    borderTop = borderBottom = "####################";
-                    sideChar = '#';
-                    break;
-            }
-
-            string attackName = GameData.AttackNames.ContainsKey(AttackCode)
-                ? GameData.AttackNames[AttackCode]
-                : AttackCode;
-
-            //Still working on this, trying to make the cards look cleaner pa
-            Console.WriteLine(borderTop);
-            Console.WriteLine($"{sideChar} {Name.PadRight(10)} HP:{HP.ToString().PadLeft(3)} {sideChar}");
-            Console.WriteLine($"{sideChar} TYPE: {Type.ToString().PadRight(11)}{sideChar}");
-            Console.WriteLine($"{sideChar} {attackName.PadRight(12)} {Attack.ToString().PadLeft(3)} {sideChar}");
-            Console.WriteLine($"{sideChar} {SpecialMove.PadRight(16)}{sideChar}");
-            Console.WriteLine(borderBottom);
-        }
-    }
 
     public class FireCard : BaseCard
     {
-        public override void PrintCard()
-        {
-
-        }
-
         public override void PullCard()
         {
 
@@ -126,11 +119,6 @@ namespace UltraMoonTCG
 
     public class WaterCard : BaseCard
     {
-        public override void PrintCard()
-        {
-
-        }
-
         public override void PullCard()
         {
 
@@ -139,15 +127,9 @@ namespace UltraMoonTCG
 
     public class GrassCard : BaseCard
     {
-        public override void PrintCard()
-        {
-
-        }
-
         public override void PullCard()
         {
 
         }
     }
-
 }
