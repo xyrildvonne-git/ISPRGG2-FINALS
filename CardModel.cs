@@ -74,11 +74,14 @@ namespace UltraMoonTCG
                 ? Program.AttackNames[AttackCode]
                 : AttackCode;
 
-            // Card borders (fixed)
+            //Card borders (fixed)
             Console.WriteLine(borderTop);
             Console.WriteLine($"{sideChar} {Name.PadRight(9)} HP:{HP.ToString().PadLeft(3)} {sideChar}");
             Console.WriteLine($"{sideChar} TYPE: {Type.ToString().PadRight(11)}{sideChar}");
-            Console.WriteLine($"{sideChar} {attackName.PadRight(12)} {Attack.ToString().PadLeft(3)} {sideChar}");
+
+            string attackLine = $"{attackName}:";
+            Console.WriteLine($"{sideChar} {attackLine.PadRight(12)} {Attack.ToString().PadLeft(3)} {sideChar}");
+
             Console.WriteLine($"{sideChar} {SpecialMove.PadRight(17)}{sideChar}");
             Console.WriteLine(borderBottom);
         }
