@@ -53,7 +53,7 @@ namespace UltraMoonTCG
 
         public static void ShowCard(int index)
         {
-            BaseCard card = Program.allCards.FirstOrDefault(c => c.Index == index); // checks if the card exists and if the user owns it (changed the original code for this)
+            BaseCard card = Program.allCards.FirstOrDefault(c => c.Index == index); // checks if the card exists and if the user owns it
 
             if (card == null || card.PullCount == 0) // determines whether a card is locked
             {
@@ -100,24 +100,23 @@ namespace UltraMoonTCG
             }
 
             // Adjusts borders based on pull count
-            // Might make some changes on this; unsure how cards with 2-4 pulls and higher rarity should look like
             string rightSide;
             if (card.PullCount == 2)
             {
-                borderTop += "+";
-                borderBottom += "+";
+                borderTop += new string(borderTop.Last(), 1);   
+                borderBottom += new string(borderBottom.Last(), 1);
                 rightSide = new string(sideChar, 2);
             }
             else if (card.PullCount == 3)
             {
-                borderTop += "++";
-                borderBottom += "++";
+                borderTop += new string(borderTop.Last(), 2);   
+                borderBottom += new string(borderBottom.Last(), 2);
                 rightSide = new string(sideChar, 3);
             }
             else if (card.PullCount == 4)
             {
-                borderTop += "+++";
-                borderBottom += "+++";
+                borderTop += new string(borderTop.Last(), 3);   
+                borderBottom += new string(borderBottom.Last(), 3);
                 rightSide = new string(sideChar, 4);
             }
             else if (card.PullCount >= 6)
@@ -134,11 +133,15 @@ namespace UltraMoonTCG
                 ? Program.AttackNames[card.AttackCode]
                 : card.AttackCode;
 
-            // Expands the card's right side depending on the pull count
+
+            // Prints card
             Console.WriteLine(borderTop);
             Console.WriteLine($"{sideChar} {card.Name.PadRight(10)} HP:{card.HP.ToString().PadLeft(2)} {rightSide}");
             Console.WriteLine($"{sideChar} TYPE: {card.Type.ToString().PadRight(10)} {rightSide}");
-            Console.WriteLine($"{sideChar} {attackName.PadRight(13)} {card.Attack.ToString().PadLeft(2)} {rightSide}");
+
+            string attackLine = $"{attackName}:";
+            Console.WriteLine($"{sideChar} {attackLine.PadRight(13)} {card.Attack.ToString().PadLeft(2)} {rightSide}");
+            
             Console.WriteLine($"{sideChar} {card.SpecialMove.PadRight(16)} {rightSide}");
             Console.WriteLine(borderBottom);
         }
