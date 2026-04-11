@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Card_Model; // Access to BaseCard and CardType
 
-namespace ConsoleApp4
+namespace UltraMoonTCG
 {
     public class UserCardSelection
     {
-        
+
         public static BaseCard ActiveSlot { get; set; } //From sir. it also makes ActiveSlot a Basecard so we can use Print methods
 
         public static void RunSelection()
@@ -14,38 +13,31 @@ namespace ConsoleApp4
             Console.Clear();
             Console.WriteLine("=== USER CARD SELECTION ===");
 
-            
-            
-            BinderSystem.DisplayBinder(); //Temporary method to call Xy's PrintBinder for now
+            BinderSystem.DisplayBinder(); // Calls BinderSystem
 
             Console.WriteLine("\n[INSTRUCTION] Type the NAME of the card to place in the Active Slot.");
             Console.Write("Selection: ");
-            string input = Console.ReadLine();
+            string choice = Console.ReadLine().Trim().ToUpper();
 
-            
             BaseCard foundCard = null;
 
-            
-            foreach (BaseCard card in BinderSystem.ownedCards) //loops through the list of cards that are already pulled
+            foreach (BaseCard card in Program.allCards) // loops through the list of cards that are already pulled (Program now holds the cards to prevent mismatch and duplication; can be changed if needed/preferred)
             {
-                
-                if (card.Name.ToUpper() == input.ToUpper())
+                if (card.Name.ToUpper() == choice && card.PullCount > 0)
                 {
                     foundCard = card;
-                    break; 
+                    break;
                 }
             }
 
-            
-            if (foundCard != null) //updates the Active Slot based on the search result
-            { 
+            if (foundCard != null) //updates the ActiveSlot based on search result
+            {
                 ActiveSlot = foundCard;
 
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"\n[SUCCESS] {ActiveSlot.Name} has been moved to the Active Slot!");
                 Console.ResetColor();
 
-                
                 ActiveSlot.PrintCard(); //prints the card that was picked using the Print Card Method
             }
             else
