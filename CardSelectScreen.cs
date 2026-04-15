@@ -24,17 +24,18 @@ public class PlayerCardSelectScreen : BaseScreen
         if (success)
         {
             DisplayPlayerCard();
-
             PromptUser(Continue);
             return ScreenResult.AICardSelect;
         }
         else
         {
+            WriteColorLine("\n[!] Selection failed. You either don't own this card or mistyped the name.", ConsoleColor.Red);
             PromptUser(Refresh);
             return ScreenResult.Refresh;
         }
     }
 }
+
 
 // AI card select screen
 public class AICardSelectScreen : BaseScreen

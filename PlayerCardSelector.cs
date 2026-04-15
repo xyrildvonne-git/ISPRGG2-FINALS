@@ -30,11 +30,6 @@ public class PlayerCardSelector
 
     public static void DisplayPlayerCard()
     {
-        if (ActiveSlot == null)
-        {
-            WriteColorLine("\n[!] Selection failed. You either don't own this card or mistyped the name.", ConsoleColor.Red);
-        }
-
         Console.WriteLine($"\n[✓] {ActiveSlot.Name} is currently in the Active Slot!\n");
         ActiveSlot.PrintColoredCard();
         Console.WriteLine();

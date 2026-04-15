@@ -33,7 +33,17 @@ public class MenuScreen : BaseScreen
                     return ScreenResult.PullCard;
 
                 case MenuOption.Battle:
-                    return ScreenResult.PlayerCardSelect;
+                    if (Program.allCards.Any(c => c.PullCount > 0))
+                    {
+                        return ScreenResult.PlayerCardSelect;
+                    }
+                    else
+                    {
+                        // Block entry and explain why
+                        WriteColorLine("\n[!] You cannot battle yet. Visit 'Pull Cards' to get your first card!\n", ConsoleColor.Red);
+                        PromptUser(Refresh);
+                        return ScreenResult.Refresh;
+                    }
 
                 case MenuOption.DisplayBinder:
                     return ScreenResult.DisplayBinder;
