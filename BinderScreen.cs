@@ -1,3 +1,8 @@
+using static UltraMoonTCG.BinderPrinter;
+using static UltraMoonTCG.CardPuller;
+using static UltraMoonTCG.Program;
+using static UltraMoonTCG.PromptType;
+using static UltraMoonTCG.BinderSystem;
 namespace UltraMoonTCG;
 
 public class BinderScreen : BaseScreen
@@ -5,7 +10,7 @@ public class BinderScreen : BaseScreen
     public override void DisplayUI()
     {
         InitializeScreen("BINDER");
-        BinderPrinter.DisplayBinder();
+        DisplayBinder();
 
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine("\n[INSTRUCTION]");
@@ -25,24 +30,17 @@ public class BinderScreen : BaseScreen
             // resets saved cards
             if (input == "R")
             {
-                CardPuller.ResetSave(Program.allCards);
-
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("\n[RESET] Save file cleared.");
-                Console.ResetColor();
-
-                PromptUser(PromptType.Refresh);
+                ResetSavedPulls(allCards);
+                WriteColorLine("\n[RESET] Save file cleared.\n",ConsoleColor.Green);
+                PromptUser(Refresh);
                 return ScreenResult.Refresh;
             }
 
             // validates user input
             if (!int.TryParse(input, out int number) || number < 0 || number > 15)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("[!] Invalid input. Only [1–15], [R], or [0] are allowed.");
-                Console.ResetColor();
-
-                PromptUser(PromptType.Refresh);
+                WriteColorLine("\n[!] Invalid input. Only [1–15], [R], or [0] are allowed.\n",ConsoleColor.Red);
+                PromptUser(Refresh);
                 return ScreenResult.Refresh;
             }
 
@@ -53,10 +51,9 @@ public class BinderScreen : BaseScreen
             }
 
             // shows card
-            BinderSystem.ShowCard(number);
-
+            DisplayBinderCard(number);
             Console.WriteLine();
-            PromptUser(PromptType.Refresh);
+            PromptUser(Refresh);
             return ScreenResult.Refresh;
         }
     }
