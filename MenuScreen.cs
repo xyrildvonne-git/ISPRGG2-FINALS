@@ -1,3 +1,4 @@
+using static UltraMoonTCG.PromptType;
 namespace UltraMoonTCG;
 
 public class MenuScreen : BaseScreen
@@ -9,13 +10,13 @@ public class MenuScreen : BaseScreen
         Console.WriteLine("[1] Pull cards");
         Console.WriteLine("[2] Battle");
         Console.WriteLine("[3] Display binder");
-        Console.WriteLine("[4] Exit\n");
+        Console.WriteLine("[4] Exit");
     }
 
     public override ScreenResult ProcessInput()
     {
         // Prompts user to choose and awaits input
-        PromptUser(PromptType.Choose);
+        PromptUser(Choose);
         string? input = Console.ReadLine();
 
         // Failsafe for invalid input
@@ -24,29 +25,29 @@ public class MenuScreen : BaseScreen
             return ScreenResult.Refresh;
         }
 
-        // Takes first character of input and references enum
-        char firstChar = input[0];
-        MenuOption choice = (MenuOption)firstChar;
-
-        switch (choice)
+        if (Enum.TryParse(input, out MenuOption choice))
         {
-            case MenuOption.PullCard:
-                return ScreenResult.PullCard;
+            switch (choice)
+            {
+                case MenuOption.PullCard:
+                    return ScreenResult.PullCard;
 
-            case MenuOption.Battle:
-                return ScreenResult.PlayerCardSelect;
+                case MenuOption.Battle:
+                    return ScreenResult.PlayerCardSelect;
 
-            case MenuOption.DisplayBinder:
-                return ScreenResult.DisplayBinder;
+                case MenuOption.DisplayBinder:
+                    return ScreenResult.DisplayBinder;
 
-            case MenuOption.Exit:
-                return ScreenResult.Credits;
+                case MenuOption.Exit:
+                    return ScreenResult.Credits;
 
-            default:
-                WriteColorLine($"\n\n[!] '{input}' is not a valid menu choice.", ConsoleColor.Red);
-
-                PromptUser(PromptType.Refresh);
-                return ScreenResult.Refresh;
+                default:
+                    break;
+            }
         }
+
+        WriteColorLine($"\n[!] '{input}' is not a valid menu choice.\n", ConsoleColor.Red);
+        PromptUser(Refresh);
+        return ScreenResult.Refresh;
     }
 }
