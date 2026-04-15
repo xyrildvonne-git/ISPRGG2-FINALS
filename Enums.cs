@@ -1,11 +1,11 @@
-﻿namespace UltraMoonTCG;
+namespace UltraMoonTCG;
 
 public enum MenuOption
 {
-    PullCard = '1',
-    Battle = '2',
-    DisplayBinder = '3',
-    Exit = '4'
+    PullCard = 1,
+    Battle = 2,
+    DisplayBinder = 3,
+    Exit = 4
 }
 
 public enum ScreenResult
