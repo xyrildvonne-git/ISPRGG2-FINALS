@@ -1,4 +1,8 @@
-﻿namespace UltraMoonTCG;
+using static UltraMoonTCG.PromptType;
+using static UltraMoonTCG.PlayerCardSelector;
+using static UltraMoonTCG.AICardSelector;
+using static UltraMoonTCG.BinderPrinter;
+namespace UltraMoonTCG;
 
 // Player card select screen
 public class PlayerCardSelectScreen : BaseScreen
@@ -7,28 +11,26 @@ public class PlayerCardSelectScreen : BaseScreen
     {
         InitializeScreen("PLAYER CARD SELECT");
 
-        BinderPrinter.DisplayBinder();
+        DisplayBinder();
 
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine("\n[INSTRUCTION] Type the NAME of the card to place in the Active Slot.");
-        Console.Write("Selection: ");
-        Console.ResetColor();
+        WriteColorLine("\n[INSTRUCTION] Type the NAME of the card to place in the Active Slot.",ConsoleColor.Yellow);
+        WriteColorLine("Selection: ", ConsoleColor.Yellow);
     }
 
     public override ScreenResult ProcessInput()
     {
-        bool success = PlayerCardSelector.SelectCard();
+        bool success = SelectPlayerCard();
 
         if (success)
         {
-            PlayerCardSelector.DisplayCard();
+            DisplayPlayerCard();
 
-            PromptUser(PromptType.Continue);
+            PromptUser(Continue);
             return ScreenResult.AICardSelect;
         }
         else
         {
-            PromptUser(PromptType.Refresh);
+            PromptUser(Refresh);
             return ScreenResult.Refresh;
         }
     }
@@ -40,14 +42,14 @@ public class AICardSelectScreen : BaseScreen
     public override void DisplayUI()
     {
         InitializeScreen("AI CARD SELECT");
-        AICardSelector.SelectCard();
-        AICardSelector.DisplayCard();
+        SelectAICard();
+        DisplayAICard();
         Console.WriteLine();
     }
 
     public override ScreenResult ProcessInput()
     {
-        PromptUser(PromptType.BattleStart);
+        PromptUser(BattleStart);
         return ScreenResult.Battle;
     }
 }
