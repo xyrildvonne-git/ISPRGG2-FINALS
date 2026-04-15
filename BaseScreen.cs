@@ -6,7 +6,6 @@ public abstract class BaseScreen
     public const string GameTitle = "Ultra Moon TCG";
     public static void InitializeScreen(string screenName)
     {
-        Console.ResetColor();
         Console.Clear();
         Console.WriteLine($"=== {GameTitle} | {screenName} ===\n");
     }
@@ -31,7 +30,7 @@ public abstract class BaseScreen
                 Console.ReadKey();
                 break;
             case PromptType.Refresh:
-                Console.WriteLine("[<] Press any key to Refresh.");
+                Console.WriteLine("[<] Press any key to refresh.");
                 Console.ReadKey();
                 break;
             case PromptType.ReturnToMenu:
