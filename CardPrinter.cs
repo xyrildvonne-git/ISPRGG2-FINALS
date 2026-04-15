@@ -83,6 +83,7 @@ public class CardPrinter
         Console.WriteLine($"{sideChar} {attackLine.PadRight(12)} {card.Attack.ToString().PadLeft(3)} {rightSide}");
         Console.WriteLine($"{sideChar} {card.SpecialMove.PadRight(17)}{rightSide}");
         Console.WriteLine(borderBottom);
+
         Console.ResetColor();
     }
 }
