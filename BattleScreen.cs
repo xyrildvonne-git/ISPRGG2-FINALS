@@ -89,7 +89,7 @@ public class BattleScreen : BaseScreen
 
         // PLACEHOLDER CODE
         Console.WriteLine("HEADS! Special Move Successful!");
-        attacker.UseSpecialMove(); // UNFINISHED IN CARD MODEL
+        attacker.UseSpecialMove(defender);
     }
 
     private bool CheckForLoss()
