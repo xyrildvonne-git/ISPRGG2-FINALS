@@ -1,4 +1,5 @@
-﻿namespace UltraMoonTCG;
+using static UltraMoonTCG.PromptType;
+namespace UltraMoonTCG;
 
 public class BattleScreen : BaseScreen
 {
@@ -13,19 +14,18 @@ public class BattleScreen : BaseScreen
         InitializeScreen("BATTLE ARENA");
 
         Console.WriteLine("Opponent: \n");
-        aiCard.PrintCard();
+        aiCard.PrintColoredCard();
+
         Console.WriteLine();
+
         Console.WriteLine("You:\n");
-        playerCard.PrintCard();
+        playerCard.PrintColoredCard();
+
         Console.WriteLine($"Current Phase: {activePhase}");
     }
 
     public override ScreenResult ProcessInput()
     {
-        if (CheckForLoss())
-        {
-            activePhase = BattlePhase.BattleResult;
-        }
 
         switch (activePhase)
         {
@@ -55,11 +55,17 @@ public class BattleScreen : BaseScreen
 
             case BattlePhase.BattleResult:
                 DisplayVictoryMessage();
-                PromptUser(PromptType.ReturnToMenu);
+                PromptUser(ReturnToMenu);
                 return ScreenResult.BattleResult;
         }
 
-        PromptUser(PromptType.Continue);
+        if (CheckForLoss())
+        {
+            activePhase = BattlePhase.BattleResult;
+        }
+
+
+        PromptUser(Continue);
         return ScreenResult.Refresh; // Loops back to the same BattleScreen for the next phase
     }
 
@@ -71,9 +77,7 @@ public class BattleScreen : BaseScreen
 
         if (bonus > 0)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"[TYPE ADVANTAGE] {attacker.Name} deals +{bonus} extra damage!");
-            Console.ResetColor();
+            WriteColorLine($"[TYPE ADVANTAGE] {attacker.Name} deals +{bonus} extra damage!",ConsoleColor.Green);
         }
 
         Console.WriteLine($"{attacker.Name} attacks for {totalDamage} damage!");
@@ -85,11 +89,19 @@ public class BattleScreen : BaseScreen
     {
         Console.Write($"{name} attempts a Special Move... ");
 
-        // INSERT COINFLIP SPECIAL MOVE LOGIC HERE
+        // 0 = Heads (Success), 1 = Tails (Failure)
+        bool isHeads = _rng.Next(0, 2) == 0;
 
-        // PLACEHOLDER CODE
-        Console.WriteLine("HEADS! Special Move Successful!");
-        attacker.UseSpecialMove(defender);
+        if (isHeads)
+        {
+            WriteColorLine("HEADS! Special Move Successful!", ConsoleColor.Cyan);
+
+            attacker.UseSpecialMove(defender);
+        }
+        else
+        {
+            WriteColorLine("TAILS! The move failed.", ConsoleColor.Red);
+        }
     }
 
     private bool CheckForLoss()
