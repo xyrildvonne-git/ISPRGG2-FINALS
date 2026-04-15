@@ -36,7 +36,7 @@ public class CardPrinter
 
         string rightSide = sideChar.ToString();
 
-        if (showStack)
+        if (showStack) // true = show card pull count (in binder system) / false = show single card count only (in pull system)
         {
             if (card.PullCount == 2)
             {
