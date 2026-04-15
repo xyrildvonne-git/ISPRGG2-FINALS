@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UltraMoonTCG;
+﻿namespace UltraMoonTCG;
 
 public class BinderScreen : BaseScreen
 {

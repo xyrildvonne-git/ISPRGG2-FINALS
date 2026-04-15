@@ -1,5 +1,5 @@
-namespace UltraMoonTCG;
 using static UltraMoonTCG.BaseScreen;
+namespace UltraMoonTCG;
 
 public static class BinderSystem
 {

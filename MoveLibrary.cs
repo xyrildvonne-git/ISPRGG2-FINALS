@@ -1,4 +1,5 @@
 ﻿namespace UltraMoonTCG;
+
 public static class MoveLibrary
 {
     public static Dictionary<string, string> AttackNames = new Dictionary<string, string>
