@@ -1,4 +1,8 @@
-﻿namespace UltraMoonTCG;
+using static UltraMoonTCG.BinderSystem;
+using static UltraMoonTCG.Program;
+using static UltraMoonTCG.CardPuller;
+using static UltraMoonTCG.PromptType;
+namespace UltraMoonTCG;
 
 public class PullCardScreen : BaseScreen
 {
@@ -10,11 +14,10 @@ public class PullCardScreen : BaseScreen
     public override ScreenResult ProcessInput()
     {
         // Failsafe for invalid number of cards
-        if (Program.allCards == null || Program.allCards.Count == 0)
+        if (allCards == null || allCards.Count == 0)
         {
             WriteColorLine("[!] No cards loaded!", ConsoleColor.Red);
-
-            PromptUser(PromptType.Refresh);
+            PromptUser(Refresh);
             return ScreenResult.Refresh;
         }
 
@@ -23,22 +26,19 @@ public class PullCardScreen : BaseScreen
 
         for (int i = 0; i < 5; i++)
         {
-            int index = rng.Next(Program.allCards.Count);
-
-            BaseCard pulledCard = Program.allCards[index];
-
-            pulledCard.PrintCard();
+            int index = rng.Next(allCards.Count);
+            BaseCard pulledCard = allCards[index];
+            pulledCard.PrintColoredCard();
             pulledCard.PullCount++;
-            BinderSystem.AddToBinder(pulledCard);
-
+            AddToBinder(pulledCard);
             Console.WriteLine();
         }
 
         // Saves pulled cards
-        CardPuller.Save(Program.allCards);
+        SavePulls(allCards);
 
         // Prompts to return to menu
-        PromptUser(PromptType.ReturnToMenu);
+        PromptUser(ReturnToMenu);
         return ScreenResult.Menu;
 
     }
