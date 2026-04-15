@@ -5,7 +5,7 @@ public class PlayerCardSelector
 {
     public static BaseCard ActiveSlot { get; set; } // From sir, creates a type of BaseCard called an ActiveSlot 
 
-    public static bool SelectCard()
+    public static bool SelectPlayerCard()
     {
         string choice = Console.ReadLine().Trim().ToUpper();
         BaseCard foundCard = null;
@@ -28,7 +28,7 @@ public class PlayerCardSelector
         return false;
     }
 
-    public static void DisplayCard()
+    public static void DisplayPlayerCard()
     {
         if (ActiveSlot == null)
         {
@@ -36,8 +36,7 @@ public class PlayerCardSelector
         }
 
         Console.WriteLine($"\n[✓] {ActiveSlot.Name} is currently in the Active Slot!\n");
-
-        ActiveSlot.PrintCard();
+        ActiveSlot.PrintColoredCard();
         Console.WriteLine();
     }
 }
