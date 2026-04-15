@@ -16,7 +16,7 @@ public class PullCardScreen : BaseScreen
         // Failsafe for invalid number of cards
         if (allCards == null || allCards.Count == 0)
         {
-            WriteColorLine("[!] No cards loaded!", ConsoleColor.Red);
+            WriteColorLine("[X] No cards loaded!", ConsoleColor.Red);
             PromptUser(Refresh);
             return ScreenResult.Refresh;
         }

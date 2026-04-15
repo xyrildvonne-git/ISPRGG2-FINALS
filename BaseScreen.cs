@@ -53,7 +53,7 @@ public abstract class BaseScreen
     public static void WriteColorLine(string message, ConsoleColor color)
     {
         Console.ForegroundColor = color;
-        Console.WriteLine(message);
+        Console.Write(message);
         Console.ResetColor();
     }
 }

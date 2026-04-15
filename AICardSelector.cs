@@ -11,7 +11,7 @@ public class AICardSelector
 
         if (Program.allCards.Count == 0) // Checks if the AI has the list
         {
-            WriteColorLine("[!] No cards available for the AI to select.", ConsoleColor.Red);
+            WriteColorLine("[X] No cards available for the AI to select.", ConsoleColor.Red);
             return;
         }
 

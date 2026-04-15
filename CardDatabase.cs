@@ -10,7 +10,7 @@ public class CardDatabase
 
         if (!File.Exists(path)) // Checks if file exists at the end of "path"
         {
-            WriteColorLine("[!] 'cards.txt' not found.",ConsoleColor.Red);
+            WriteColorLine("[X] 'cards.txt' not found.",ConsoleColor.Red);
             return cardList; // Fulfills the return promise
         }
 

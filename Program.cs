@@ -13,7 +13,7 @@ internal class Program
         allCards = LoadCards("cards.txt");
 
         // Loads pulls
-        CardPuller.Load(allCards);
+        Load(allCards);
 
         // Creates screen variables
         BaseScreen activeScreen = new MenuScreen();
@@ -67,7 +67,7 @@ internal class Program
         }
 
         // Saves cards upon exit
-        Save(allCards);
+        SavePulls(allCards);
 
     }
 }

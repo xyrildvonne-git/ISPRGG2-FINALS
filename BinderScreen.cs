@@ -31,7 +31,7 @@ public class BinderScreen : BaseScreen
             if (input == "R")
             {
                 ResetSavedPulls(allCards);
-                WriteColorLine("\n[RESET] Save file cleared.\n",ConsoleColor.Green);
+                WriteColorLine("\n[!] Save file cleared.\n\n",ConsoleColor.Green);
                 PromptUser(Refresh);
                 return ScreenResult.Refresh;
             }
@@ -39,7 +39,7 @@ public class BinderScreen : BaseScreen
             // validates user input
             if (!int.TryParse(input, out int number) || number < 0 || number > 15)
             {
-                WriteColorLine("\n[!] Invalid input. Only [1–15], [R], or [0] are allowed.\n",ConsoleColor.Red);
+                WriteColorLine("\n[X] Invalid input. Only [1–15], [R], or [0] are allowed.\n\n",ConsoleColor.Red);
                 PromptUser(Refresh);
                 return ScreenResult.Refresh;
             }

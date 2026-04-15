@@ -13,8 +13,8 @@ public class PlayerCardSelectScreen : BaseScreen
 
         DisplayBinder();
 
-        WriteColorLine("\n[INSTRUCTION] Type the NAME of the card to place in the Active Slot.",ConsoleColor.Yellow);
-        WriteColorLine("Selection: ", ConsoleColor.Yellow);
+        WriteColorLine("\n[!] Type the NAME of the card to place in the Active Slot.",ConsoleColor.Yellow);
+        WriteColorLine("\nSelection: ", ConsoleColor.Yellow);
     }
 
     public override ScreenResult ProcessInput()
@@ -29,7 +29,7 @@ public class PlayerCardSelectScreen : BaseScreen
         }
         else
         {
-            WriteColorLine("\n[!] Selection failed. You either don't own this card or mistyped the name.", ConsoleColor.Red);
+            WriteColorLine("\n[X] Selection failed. You either don't own this card or mistyped the name.\n\n", ConsoleColor.Red);
             PromptUser(Refresh);
             return ScreenResult.Refresh;
         }

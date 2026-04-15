@@ -40,7 +40,7 @@ public class MenuScreen : BaseScreen
                     else
                     {
                         // Block entry and explain why
-                        WriteColorLine("\n[!] You cannot battle yet. Visit 'Pull Cards' to get your first card!\n", ConsoleColor.Red);
+                        WriteColorLine("\n[!] You cannot battle yet. Visit 'Pull Cards' to get your first card!\n\n", ConsoleColor.Red);
                         PromptUser(Refresh);
                         return ScreenResult.Refresh;
                     }
@@ -56,7 +56,7 @@ public class MenuScreen : BaseScreen
             }
         }
 
-        WriteColorLine($"\n[!] '{input}' is not a valid menu choice.\n", ConsoleColor.Red);
+        WriteColorLine($"\n[X] '{input}' is not a valid menu choice.\n\n", ConsoleColor.Red);
         PromptUser(Refresh);
         return ScreenResult.Refresh;
     }
