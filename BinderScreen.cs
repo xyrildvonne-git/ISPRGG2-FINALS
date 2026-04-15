@@ -1,4 +1,4 @@
-﻿namespace UltraMoonTCG;
+namespace UltraMoonTCG;
 
 public class BinderScreen : BaseScreen
 {
@@ -16,7 +16,7 @@ public class BinderScreen : BaseScreen
         Console.ResetColor();
     }
 
-    public override BaseScreen ProcessInput()
+    public override ScreenResult ProcessInput()
     {
         while (true)
         {
@@ -31,8 +31,8 @@ public class BinderScreen : BaseScreen
                 Console.WriteLine("\n[RESET] Save file cleared.");
                 Console.ResetColor();
 
-                PromptUser(PromptType.Retry);
-                return this;
+                PromptUser(PromptType.Refresh);
+                return ScreenResult.Refresh;
             }
 
             // validates user input
@@ -42,37 +42,22 @@ public class BinderScreen : BaseScreen
                 Console.WriteLine("[!] Invalid input. Only [1–15], [R], or [0] are allowed.");
                 Console.ResetColor();
 
-                PromptUser(PromptType.Retry);
-                return this;
+                PromptUser(PromptType.Refresh);
+                return ScreenResult.Refresh;
             }
 
             // returns to main menu
             if (number == 0)
             {
-                return new MenuScreen();
+                return ScreenResult.Menu;
             }
 
             // shows card
             BinderSystem.ShowCard(number);
 
             Console.WriteLine();
-            PromptUser(PromptType.Retry);
-            return this;
+            PromptUser(PromptType.Refresh);
+            return ScreenResult.Refresh;
         }
-    }
-}
-
-
-public class BinderCardScreen : BaseScreen
-{
-    public override void DisplayUI()
-    {
-        InitializeScreen("BINDER");
-
-    }
-
-    public override BaseScreen ProcessInput()
-    {
-        return this;
     }
 }
