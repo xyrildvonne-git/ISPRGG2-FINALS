@@ -1,66 +1,73 @@
-using System;
-using System.Collections.Generic;
-
+using static UltraMoonTCG.CardDatabase;
+using static UltraMoonTCG.CardPuller;
 namespace UltraMoonTCG;
 
 internal class Program
 {
-    public static List<BaseCard> allCards;
-
-    public static Dictionary<string, string> AttackNames = new Dictionary<string, string>
-    {
-        {"JMS", "Jump Scare"},
-        {"SFB", "Soft Block"},
-        {"HPS", "Hard Pass"},
-        {"DLL", "Delulu"},
-        {"BRR", "Brain Rot"},
-        {"MXS", "Mixed Signal"},
-        {"RBD", "Rebound"},
-        {"ORB", "Orbiting"},
-        {"RLP", "Relapse"},
-        {"GHS", "Ghosting"},
-        {"HRL", "Hard Launch"},
-        {"NCH", "Nonchalant"},
-        {"LVB", "Love Bomb"},
-        {"AUF", "Aura Farm"},
-        {"TRD", "Trauma Dump"}
-    };
+    public static List<BaseCard> allCards { get; private set; } = default!;
 
     static void Main()
     {
-        // Loads cards.txt
-        allCards = DataSource.LoadCards("cards.txt");
 
-        // Loads pulled cards
-        CardPulls.Load(allCards);
+        // Loads cards
+        allCards = LoadCards("cards.txt");
 
+        // Loads pulls
+        CardPuller.Load(allCards);
 
-        GameScreen currentScreen = new MainMenu();
+        // Creates screen variables
+        BaseScreen activeScreen = new MenuScreen();
+        BaseScreen nextScreen; 
 
-        while (currentScreen != null)
+        // Game loop logic
+        while (activeScreen != null)
         {
-            currentScreen.DisplayUI();
-            currentScreen = currentScreen.ProcessInput();
+            activeScreen.DisplayUI();
+
+            switch (activeScreen.ProcessInput())
+            {
+                case ScreenResult.PullCard:
+                    nextScreen = new PullCardScreen();
+                    break;
+
+                case ScreenResult.Battle:
+                    nextScreen = new BattleScreen();
+                    break;
+
+                case ScreenResult.PlayerCardSelect:
+                    nextScreen = new PlayerCardSelectScreen();
+                    break;
+
+                case ScreenResult.AICardSelect:
+                    nextScreen = new AICardSelectScreen();
+                    break;
+
+                case ScreenResult.DisplayBinder:
+                    nextScreen = new BinderScreen();
+                    break;
+
+                case ScreenResult.Refresh:
+                    nextScreen = activeScreen;
+                    break;
+
+                case ScreenResult.Credits:
+                    nextScreen = new CreditsScreen();
+                    break;
+
+                case ScreenResult.Exit:
+                    nextScreen = null!; 
+                    break;
+
+                default:
+                    nextScreen = new MenuScreen();
+                    break;
+            }
+
+            activeScreen = nextScreen; // Updates the screen according to input
         }
 
-        // Saves cards before exit
-        CardPulls.Save(allCards);
+        // Saves cards upon exit
+        Save(allCards);
 
-
-        // Shutdown screen
-        Console.Clear();
-        GameScreen.InitializeScreen("CREDITS");
-
-        Console.WriteLine("Thank you so much for playing!");
-
-        Console.WriteLine("\nGame made by:");
-        Console.WriteLine("De Guzman, Kellie");
-        Console.WriteLine("Layugan, Mishael");
-        Console.WriteLine("Tee, Xyril");
-
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine("\n[X] Press any key to exit.");
-        Console.ResetColor();
-        Console.ReadKey(true);
     }
 }
