@@ -1,138 +1,73 @@
-using System;
-using System.Collections.Generic;
+namespace UltraMoonTCG;
 
-namespace UltraMoonTCG
+public interface ICard
 {
-    public enum CardType
+    string Name { get; }
+}
+
+public abstract class BaseCard : ICard
+{
+    private string name = "Unknown Card";
+    private int hp;
+    private int attack;
+
+    public string Name
     {
-        FIRE,
-        WATER,
-        GRASS
+        get => name;
+        set => name = ValidateName(value);
+    }
+    public int HP
+    {
+        get => hp;
+        set => hp = PreventNegative(value);
+    }
+    public int Attack
+    {
+        get => attack;
+        set => attack = PreventNegative(value);
     }
 
-    public interface ICard
+    private int PreventNegative(int input) => Math.Max(0, input);
+    private string ValidateName(string input) => string.IsNullOrWhiteSpace(input) ? "Unknown Card" : input;
+
+    public CardType Type { get; set; }
+    public RarityLevel Rarity { get; set; }
+    public abstract ConsoleColor ElementColor { get; }
+
+    public string AttackCode = default!;
+    public string SpecialMove { get; set; } = default!;
+
+    public int Index { get; set; }
+    public int PullCount { get; set; }
+
+    public void UseSpecialMove()
     {
-        string Name { get; }
+        // SPECIAL MOVE LOGIC HERE???
     }
 
-
-    public abstract class BaseCard : ICard // Battle cards
+    public virtual void PrintCard()
     {
-        public string Name { get; set; }
-        public CardType Type { get; set; }
-        public int Rarity { get; set; }
-        public int HP { get; set; }
-
-        public string AttackCode { get; set; }
-        public int Attack { get; set; }
-        public string SpecialMove { get; set; }
-
-        public int Index { get; set; }
-        public int PullCount { get; set; }
-
-
-        public virtual void PrintCard() // Deleted PrintCard class and moved to CardModel
-        {
-            string borderTop = "";
-            string borderBottom = "";
-            char sideChar = '|';
-
-            switch (Rarity)
-            {
-                case 1:
-                    borderTop = "+------------------+"; // Combined Top and Bottom into single line of code for easy changing later on
-                    borderBottom = "+------------------+";
-                    sideChar = '|';
-                    break;
-
-                case 2:
-                    borderTop = "+==================+";
-                    borderBottom = "+==================+";
-                    sideChar = '|';
-                    break;
-
-                case 3:
-                    borderTop = "********************";
-                    borderBottom = "********************";
-                    sideChar = '*';
-                    break;
-
-                case 4:
-                    borderTop = "@@@@@@@@@@@@@@@@@@@@";
-                    borderBottom = "@@@@@@@@@@@@@@@@@@@@";
-                    sideChar = '@';
-                    break;
-
-                case 5:
-                    borderTop = "####################";
-                    borderBottom = "####################";
-                    sideChar = '#';
-                    break;
-            }
-
-            string attackName = Program.AttackNames.ContainsKey(AttackCode)
-                ? Program.AttackNames[AttackCode]
-                : AttackCode;
-
-            //Card borders (fixed)
-            Console.WriteLine(borderTop);
-            Console.WriteLine($"{sideChar} {Name.PadRight(9)} HP:{HP.ToString().PadLeft(3)} {sideChar}");
-            Console.WriteLine($"{sideChar} TYPE: {Type.ToString().PadRight(11)}{sideChar}");
-
-            string attackLine = $"{attackName}:";
-            Console.WriteLine($"{sideChar} {attackLine.PadRight(12)} {Attack.ToString().PadLeft(3)} {sideChar}");
-
-            Console.WriteLine($"{sideChar} {SpecialMove.PadRight(17)}{sideChar}");
-            Console.WriteLine(borderBottom);
-        }
-
-        public abstract void PullCard();
+        Console.ForegroundColor = ElementColor;
+        CardPrinter.PrintCard(this);
+        Console.ResetColor();
     }
+}
 
-    public static class GameData
-    {
-        public static Dictionary<string, string> AttackNames = new Dictionary<string, string> // Moved dictionary to CardModel like sir's Google Doc
-        {
-            { "JMS", "Jump Scare" },
-            { "SFB", "Soft Block" },
-            { "HPS", "Hard Pass" },
-            { "DLL", "Delulu" },
-            { "BRR", "Brain Rot" },
-            { "MXS", "Mixed Signal" },
-            { "RBD", "Rebound" },
-            { "ORB", "Orbiting" },
-            { "RLP", "Relapse" },
-            { "GHS", "Ghosting" },
-            { "HRL", "Hard Launch" },
-            { "NCH", "Nonchalant" },
-            { "LVB", "Love Bomb" },
-            { "AUF", "Aura Farm" },
-            { "TRD", "Trauma Dump" }
-        };
-    }
+public class FireCard : BaseCard
+{
+    public FireCard() => Type = CardType.FIRE;
+    public override ConsoleColor ElementColor => ConsoleColor.Red;
 
+}
 
-    public class FireCard : BaseCard
-    {
-        public override void PullCard()
-        {
+public class WaterCard : BaseCard
+{
+    public WaterCard() => Type = CardType.WATER;
+    public override ConsoleColor ElementColor => ConsoleColor.Blue;
+}
 
-        }
-    }
-
-    public class WaterCard : BaseCard
-    {
-        public override void PullCard()
-        {
-
-        }
-    }
-
-    public class GrassCard : BaseCard
-    {
-        public override void PullCard()
-        {
-
-        }
-    }
+public class GrassCard : BaseCard
+{
+    public GrassCard() => Type = CardType.GRASS;
+    public override ConsoleColor ElementColor => ConsoleColor.Green;
 }
