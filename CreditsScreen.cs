@@ -1,4 +1,5 @@
-﻿namespace UltraMoonTCG;
+using static UltraMoonTCG.PromptType;
+namespace UltraMoonTCG;
 
 public class CreditsScreen : BaseScreen
 {
@@ -11,9 +12,9 @@ public class CreditsScreen : BaseScreen
         Console.WriteLine("De Guzman, Kellie");
         Console.WriteLine("Layugan, Mishael");
         Console.WriteLine("Tee, Xyril");
-        WriteColorLine("\n[X] Press any key to exit.", ConsoleColor.Red);
 
-        Console.ReadKey(true);
+        Console.WriteLine();
+        PromptUser(Exit);
     }
 
     public override ScreenResult ProcessInput()
