@@ -15,7 +15,7 @@ public static class BinderSystem
         }
     }
 
-    public static void ShowCard(int index)
+    public static void DisplayBinderCard(int index)
     {
         BaseCard card = Program.allCards.FirstOrDefault(c => c.Index == index); // checks if the card exists and if the user owns it
 
