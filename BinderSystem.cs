@@ -32,35 +32,6 @@ public static class BinderSystem
         var (borderTop, borderBottom, sideChar, rightSide) = CardPrinter.GetBorders(card, showStack: true);
         CardPrinter.PrintCard(card, showStack: true);
 
-
-        // Adjusts borders based on pull count
-        if (card.PullCount == 2)
-        {
-            borderTop += new string(borderTop.Last(), 1);
-            borderBottom += new string(borderBottom.Last(), 1);
-            rightSide = new string(sideChar, 2);
-        }
-        else if (card.PullCount == 3)
-        {
-            borderTop += new string(borderTop.Last(), 2);
-            borderBottom += new string(borderBottom.Last(), 2);
-            rightSide = new string(sideChar, 3);
-        }
-        else if (card.PullCount == 4)
-        {
-            borderTop += new string(borderTop.Last(), 3);
-            borderBottom += new string(borderBottom.Last(), 3);
-            rightSide = new string(sideChar, 4);
-        }
-        else if (card.PullCount >= 6)
-        {
-            borderTop += $" x{card.PullCount}";
-            rightSide = new string(sideChar, 1);
-        }
-        else
-        {
-            rightSide = new string(sideChar, 1);
-        }
-
     }
 }
+
