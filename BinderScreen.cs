@@ -13,19 +13,18 @@ public class BinderScreen : BaseScreen
         DisplayBinder();
 
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine("\n[INSTRUCTION]");
-        Console.WriteLine("Enter [1-15] to display card information.");
-        Console.WriteLine("Enter [R] to reset saved cards.");
-        Console.WriteLine("Enter [0] to return.");
-        Console.Write("\nSelection: ");
+        Console.WriteLine("\n[1-15] Display card information");
+        Console.WriteLine("[R] Reset saved cards");
+        Console.WriteLine("[0] Return to menu");
         Console.ResetColor();
+        PromptUser(Choose);
     }
 
     public override ScreenResult ProcessInput()
     {
         while (true)
         {
-            string input = Console.ReadLine().ToUpper();
+            string? input = Console.ReadLine().ToUpper();
 
             // resets saved cards
             if (input == "R")
