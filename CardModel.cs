@@ -1,3 +1,5 @@
+using static UltraMoonTCG.BaseScreen;
+using static UltraMoonTCG.CardPrinter;
 namespace UltraMoonTCG;
 
 public interface ICard
@@ -44,21 +46,17 @@ public abstract class BaseCard : ICard
     {
         if (MoveLibrary.Spells.TryGetValue(this.Type, out var spell))
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            WriteColorLine($"\n[SPECIAL] {this.Name} uses {spell.name}!",ConsoleColor.Yellow);
 
-            Console.WriteLine($"\n[SPECIAL] {this.Name} uses {spell.name}!");
+            WriteColorLine($"\n[EFFECT] {opponent.Name} is now {spell.effect}!", ConsoleColor.Yellow);
 
-            Console.WriteLine($"\n[EFFECT] {opponent.Name} is now {spell.effect}!");
-
-            Console.ResetColor();
         }
     }
 
-
-    public virtual void PrintCard()
+    public virtual void PrintColoredCard()
     {
         Console.ForegroundColor = ElementColor;
-        CardPrinter.PrintCard(this);
+        PrintCard(this);
         Console.ResetColor();
     }
 }
