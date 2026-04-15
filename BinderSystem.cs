@@ -28,7 +28,7 @@ public static class BinderSystem
 
         // Removed console clear
         Console.WriteLine();
-       // calls method in CardPrinter to print the card format in BinderSystem
+        // calls method in CardPrinter to print the card format in BinderSystem
         var (borderTop, borderBottom, sideChar, rightSide) = CardPrinter.GetBorders(card, showStack: true);
         CardPrinter.PrintCard(card, showStack: true);
 

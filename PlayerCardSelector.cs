@@ -30,7 +30,7 @@ public class PlayerCardSelector
 
     public static void DisplayPlayerCard()
     {
-        Console.WriteLine($"\n[✓] {ActiveSlot.Name} is currently in the Active Slot!\n");
+        Console.WriteLine($"\nYou have put {ActiveSlot.Name} in your Active Slot!\n");
         ActiveSlot.PrintColoredCard();
         Console.WriteLine();
     }

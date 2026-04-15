@@ -13,7 +13,8 @@ public class BinderScreen : BaseScreen
         DisplayBinder();
 
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine("\n[1-15] Display card information");
+        Console.WriteLine("\n[INSTRUCTIONS]");
+        Console.WriteLine("[1-15] Display card information");
         Console.WriteLine("[R] Reset saved cards");
         Console.WriteLine("[0] Return to menu");
         Console.ResetColor();

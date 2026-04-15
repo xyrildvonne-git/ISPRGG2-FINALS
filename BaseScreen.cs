@@ -48,8 +48,7 @@ public abstract class BaseScreen
         }
         Console.ResetColor();
     }
-
-
+    
     public static void WriteColorLine(string message, ConsoleColor color)
     {
         Console.ForegroundColor = color;

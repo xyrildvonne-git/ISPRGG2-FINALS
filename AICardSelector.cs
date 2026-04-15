@@ -17,15 +17,11 @@ public class AICardSelector
 
         Random rng = new Random();
         int randomIndex = rng.Next(Program.allCards.Count); //randomly select one card from the master list
-
-
         ActiveSlot = Program.allCards[randomIndex]; //places the random card to the ai active slot
     }
 
     public static void DisplayAICard()
     {
-        Console.WriteLine("Your opponent has chosen!\n");
         ActiveSlot.PrintColoredCard();
-        Console.WriteLine($"\nAI will battle with {ActiveSlot.Name}!");
     }
 }
