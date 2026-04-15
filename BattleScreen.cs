@@ -65,8 +65,20 @@ public class BattleScreen : BaseScreen
 
     private void HandleNormalAttack(BaseCard attacker, BaseCard defender)
     {
-        Console.WriteLine($"{attacker.Name} attacks for {attacker.Attack} damage!");
-        defender.HP -= attacker.Attack;
+        //Type Advantage for Screen
+        int bonus = TypeAdvantage.GetDamageBonus(attacker.Type, defender.Type);
+        int totalDamage = attacker.Attack + bonus;
+
+        if (bonus > 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"[TYPE ADVANTAGE] {attacker.Name} deals +{bonus} extra damage!");
+            Console.ResetColor();
+        }
+
+        Console.WriteLine($"{attacker.Name} attacks for {totalDamage} damage!");
+        defender.HP -= totalDamage;
+
     }
 
     private void HandleSpecialTurn(string name, BaseCard attacker, BaseCard defender)

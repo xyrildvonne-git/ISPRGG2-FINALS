@@ -40,10 +40,20 @@ public abstract class BaseCard : ICard
     public int Index { get; set; }
     public int PullCount { get; set; }
 
-    public void UseSpecialMove()
+    public void UseSpecialMove(BaseCard opponent)
     {
-        // SPECIAL MOVE LOGIC HERE???
+        if (MoveLibrary.Spells.TryGetValue(this.Type, out var spell))
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.WriteLine($"\n[SPECIAL] {this.Name} uses {spell.name}!");
+
+            Console.WriteLine($"\n[EFFECT] {opponent.Name} is now {spell.effect}!");
+
+            Console.ResetColor();
+        }
     }
+
 
     public virtual void PrintCard()
     {
