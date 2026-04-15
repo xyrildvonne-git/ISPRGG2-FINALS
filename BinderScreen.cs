@@ -1,42 +1,80 @@
-﻿namespace UltraMoonTCG;
+﻿using System;
+
+namespace UltraMoonTCG;
 
 public class BinderScreen : BaseScreen
 {
     public override void DisplayUI()
     {
         InitializeScreen("BINDER");
-
         BinderPrinter.DisplayBinder();
 
-        WriteColorLine("\n[INSTRUCTION] Enter 1-15 to display card information. Press [0] to return to menu...", ConsoleColor.Yellow);
-        WriteColorLine("Selection: ", ConsoleColor.Yellow);
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("\n[INSTRUCTION]");
+        Console.WriteLine("Enter [1-15] to display card information.");
+        Console.WriteLine("Enter [R] to reset saved cards.");
+        Console.WriteLine("Enter [0] to return.");
+        Console.Write("\nSelection: ");
+        Console.ResetColor();
     }
 
-    public override ScreenResult ProcessInput()
+    public override BaseScreen ProcessInput()
     {
         while (true)
         {
-            if (!int.TryParse(Console.ReadLine(), out int input) || input < 0 || input > 15)
-            {
-                WriteColorLine("[!] Invalid input. Only numbers 1–15 allowed.", ConsoleColor.Red);
-                PromptUser(PromptType.Refresh);
-                return ScreenResult.Refresh;
+            string input = Console.ReadLine().ToUpper();
 
-            } 
-            if (input == 0) 
+            // resets saved cards
+            if (input == "R")
             {
-                PromptUser(PromptType.ReturnToMenu);
-                return ScreenResult.Menu;
-            } 
-            
-            bool showStack = true;
-            BinderSystem.ShowCard(input);
-            
+                CardPuller.ResetSave(Program.allCards);
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("\n[RESET] Save file cleared.");
+                Console.ResetColor();
+
+                PromptUser(PromptType.Retry);
+                return this;
+            }
+
+            // validates user input
+            if (!int.TryParse(input, out int number) || number < 0 || number > 15)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("[!] Invalid input. Only [1–15], [R], or [0] are allowed.");
+                Console.ResetColor();
+
+                PromptUser(PromptType.Retry);
+                return this;
+            }
+
+            // returns to main menu
+            if (number == 0)
+            {
+                return new MenuScreen();
+            }
+
+            // shows card
+            BinderSystem.ShowCard(number);
+
             Console.WriteLine();
-
-            PromptUser(PromptType.Refresh);
-            return ScreenResult.Refresh;
+            PromptUser(PromptType.Retry);
+            return this;
         }
     }
+}
 
+
+public class BinderCardScreen : BaseScreen
+{
+    public override void DisplayUI()
+    {
+        InitializeScreen("BINDER");
+
+    }
+
+    public override BaseScreen ProcessInput()
+    {
+        return this;
+    }
 }
