@@ -29,7 +29,7 @@ public class PullCardScreen : BaseScreen
             int index = rng.Next(allCards.Count);
             BaseCard pulledCard = allCards[index];
             pulledCard.PrintColoredCard();
-            pulledCard.PullCount++;
+            // pulledCard.PullCount++; (MAIN CULPRIT OF 2X CARD PULLS; increments twice)
             AddToBinder(pulledCard);
             Console.WriteLine();
         }
